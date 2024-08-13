@@ -1,0 +1,63 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riptide</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1 class="info">Добро пожаловать в Riptide!</h1>
+    <div class="btn">
+        <button id="signup">Регистрация</button>
+        <button id="signin">Войти</button>
+    </div>
+    <script>
+        document.getElementById('signin').addEventListener('click', () => {
+            const newWindow = window.open('', 'Login', 'width=400,height=300');
+
+            newWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Вход</title>
+                    </head>
+                    <body>
+                        <h2>Вход</h2>
+                        <form id="loginForm">
+                            <label for="username">Логин:</label><br>
+                            <input type="text" id="username" name="username"><br><br>
+                            <label for="password">Пароль:</label><br>
+                            <input type="password" id="password" name="password"><br><br>
+                            <input type="submit" value="Войти">
+                        </form>
+                        <p id="message"></p>
+                        <script>
+                            const validUsername = 'admin';
+                            const validPassword = '123';
+
+                            document.getElementById('loginForm').addEventListener('submit', function(event) {
+                                event.preventDefault();
+                                const username = document.getElementById('username').value;
+                                const password = document.getElementById('password').value;
+
+                                if (username === validUsername && password === validPassword) {
+                                    document.getElementById('message').innerText = 'Вход выполнен успешно!';
+                                    setTimeout(() => { // Исправлено на setTimeout
+                                        window.location.href = 'lenta.html'; // Замените на нужный файл
+                                    }, 1000); // Задержка 1 секунда перед перенаправлением
+                                    newWindow.close(); // Закрыть окно после успешного входа
+                                } else {
+                                    document.getElementById('message').innerText = 'Неверный логин или пароль.';
+                                }
+                            });
+                        <\/script>
+                    </body>
+                </html>
+            `);
+
+            newWindow.document.close();
+        });
+    </script>
+</body>
+</html>
